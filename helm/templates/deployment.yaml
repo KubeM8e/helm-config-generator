@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+  - app: '{{.Values.deployment.metadata.labels.app}}'
+  - version: '{{.Values.deployment.metadata.labels.version}}'
+  name: '{{.Values.deployment.metadata.name}}'
+spec:
+  replicas: '{{.Values.deployment.spec.replicas}}'
+  selector:
+    matchLabels:
+    - appType: '{{.Values.deployment.spec.selector.matchLabels.appType}}'
+  template:
+    metadata:
+      labels:
+      - appType: '{{.Values.deployment.spec.template.metadata.labels.appType}}'
+    spec:
+      containers:
+      - image: '{{.Values.deployment.spec.template.spec.containers.image}}'
+        name: '{{.Values.deployment.spec.template.spec.containers.name}}'
+        ports:
+        - containerPort: '{{.Values.deployment.spec.template.spec.containers.ports.containerPort}}'

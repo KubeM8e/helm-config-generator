@@ -1,0 +1,37 @@
+deployment:
+  metadata:
+    labels:
+    - app: frontend
+    - version: v1
+    name: my-app
+  spec:
+    replicas: 3
+    selector:
+      matchLabels:
+      - appType: nginx
+    template:
+      metadata:
+        labels:
+        - appType: nginx
+      spec:
+        containers:
+        - image: nginx:latest
+          name: nginx
+          ports:
+          - containerPort: 80
+ingress:
+  spec:
+    ingressClassName: nginx-example
+    rules:
+    - http:
+        paths:
+        - backend:
+            service:
+              name: test
+              port:
+                number: 80
+          path: /testpath
+          pathType: Prefix
+service:
+  metadata:
+    name: my-app-service
